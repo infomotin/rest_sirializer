@@ -37,3 +37,8 @@ class ArticleSerializer(serializers.Serializer):
         instance.active = validated_data.get('active', instance.active)
         instance.save()
         return instance
+
+    def validate(self, data):
+        if data["title"] == data["descriptions"]:
+            raise serializers.ValidationError(" Title and descriptions are not Same ")
+        return data
