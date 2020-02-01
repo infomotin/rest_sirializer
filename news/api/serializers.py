@@ -4,6 +4,7 @@ from rest_framework import serializers
 from news.models import Article
 
 
+# Create a serializer that like a models as Django create a database table
 class ArticleSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     author = serializers.CharField(max_length=50)
@@ -16,9 +17,16 @@ class ArticleSerializer(serializers.Serializer):
     create_at = serializers.DateTimeField(read_only=True)
     update_at = serializers.DateTimeField(read_only=True)
 
-    def create(self, validated_data):
-        return Article.objects.create(**validated_data)
+    # ArticleSerializer class are Inherited with rest frameworks serializers bass class
 
+    # that is functions overwrite
+    def create(self, validated_data):
+        # article Model are create that get from json format
+        return Article.objects.create(**validated_data)  # arguments are like **kwargs (key with value)
+        # if class properties are satisfied with key data as like insert sql commend then object are insert into
+        # database
+
+    # instance are Article objects
     def update(self, instance, validated_data):
         instance.author = validated_data.get('author', instance.author)
         instance.title = validated_data.get('title', instance.title)

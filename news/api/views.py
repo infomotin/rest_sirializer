@@ -5,6 +5,7 @@ from news.models import Article
 from news.api.serializers import ArticleSerializer
 
 
+# this is Functions Based View
 @api_view(["GET", "POST"])
 def listCreateArticleSerializer(request):
     if request.method == "GET":
