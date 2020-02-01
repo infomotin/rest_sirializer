@@ -75,6 +75,12 @@ class ArticleDetailView(APIView):
         article = get_object_or_404(Article, pk=pk)
         return article
 
+    # with out get_object functions it can do
+    # def get(self, request, pk):
+    #     article = get_object_or_404(Article, pk=pk)
+    #     serializer = ArticleSerializer(article)
+    #     return Response(serializer.data)
+
     def get(self, request, pk):
         article = self.get_object(pk)
         serializer = ArticleSerializer(article)
