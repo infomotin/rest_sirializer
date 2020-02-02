@@ -102,7 +102,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 class JournalistSerializer(serializers.ModelSerializer):
     # Hyper Link views Serializer declearing
-    articles = serializers.HyperlinkedRelatedField(many=True, read_only=True, validators="class-apilist")
+    articles = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name="class-apilist")
 
     # articles = ArticleSerializer(many=True, read_only=True)
 
