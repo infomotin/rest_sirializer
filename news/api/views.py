@@ -71,6 +71,28 @@ class JournalistSerializerApiViews(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class JournalistDetailView(APIView):
+
+    # with out get_object functions it can do
+    def get(self, request, pk):
+        journalist = get_object_or_404(Journalist, pk=pk)
+        serializer = JournalistSerializer(journalist)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        journalist = get_object_or_404(Journalist, pk=pk)
+        serializer = JournalistSerializer(journalist, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        journalist = get_object_or_404(Journalist, pk=pk)
+        journalist.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 class ArticleListViewsCreateViews(APIView):
     def get(self, request):
         article = Article.objects.filter(active=True)
