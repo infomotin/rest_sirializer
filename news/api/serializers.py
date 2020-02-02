@@ -54,6 +54,8 @@ class ArticleSerializer(serializers.ModelSerializer):
     # its temporary work with function
     # working as like javascript current data work
     time_since_publication = serializers.SerializerMethodField()
+    # this variable are contain Foreignkey value with this value
+    author = serializers.StringRelatedField()
 
     class Meta:
         model = Article
