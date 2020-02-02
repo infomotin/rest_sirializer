@@ -60,7 +60,7 @@ def article_detais_views(request, pk):
 class JournalistSerializerApiViews(APIView):
     def get(self, request):
         journalist = Journalist.objects.all()
-        serializer = JournalistSerializer(journalist, many=True)
+        serializer = JournalistSerializer(journalist, many=True, context={'request': request})
         return Response(serializer.data)
 
     def post(self, request):
@@ -76,12 +76,12 @@ class JournalistDetailView(APIView):
     # with out get_object functions it can do
     def get(self, request, pk):
         journalist = get_object_or_404(Journalist, pk=pk)
-        serializer = JournalistSerializer(journalist)
+        serializer = JournalistSerializer(journalist, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk):
         journalist = get_object_or_404(Journalist, pk=pk)
-        serializer = JournalistSerializer(journalist, data=request.data)
+        serializer = JournalistSerializer(journalist, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -96,11 +96,11 @@ class JournalistDetailView(APIView):
 class ArticleListViewsCreateViews(APIView):
     def get(self, request):
         article = Article.objects.filter(active=True)
-        serializer = ArticleSerializer(article, many=True)
+        serializer = ArticleSerializer(article, many=True,context={'request': request})
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = ArticleSerializer(data=request.data)
+        serializer = ArticleSerializer(data=request.data,context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -120,12 +120,12 @@ class ArticleDetailView(APIView):
 
     def get(self, request, pk):
         article = self.get_object(pk)
-        serializer = ArticleSerializer(article)
+        serializer = ArticleSerializer(article,context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk):
         article = self.get_object(pk)
-        serializer = ArticleSerializer(article, data=request.data)
+        serializer = ArticleSerializer(article, data=request.data,context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

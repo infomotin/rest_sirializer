@@ -1,9 +1,15 @@
-from abc import ABC
+# from news.api.views import (listCreateArticleSerializer,
+#                             article_detais_views,
+#                             ArticleListViewsCreateViews,
+#                             ArticleDetailView,
+#                             JournalistSerializerApiViews,
+#                             JournalistDetailView)
 from datetime import datetime
+
 # timesince are a functions
 from django.utils.timesince import timesince
-
 from rest_framework import serializers
+
 from news.models import Article, Journalist
 
 
@@ -102,7 +108,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 class JournalistSerializer(serializers.ModelSerializer):
     # Hyper Link views Serializer declearing
-    articles = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name="class-apilist")
+    articles = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name="apicrud")
 
     # articles = ArticleSerializer(many=True, read_only=True)
 

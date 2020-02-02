@@ -1,4 +1,5 @@
 from django.urls import path, include
+from news.models import *
 from news.api.views import (listCreateArticleSerializer,
                             article_detais_views,
                             ArticleListViewsCreateViews,
