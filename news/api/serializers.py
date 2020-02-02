@@ -101,7 +101,10 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 
 class JournalistSerializer(serializers.ModelSerializer):
-    articles = ArticleSerializer(many=True, read_only=True)
+    # Hyper Link views Serializer declearing
+    articles = serializers.HyperlinkedRelatedField(many=True, read_only=True, validators="class-apilist")
+
+    # articles = ArticleSerializer(many=True, read_only=True)
 
     class Meta:
         model = Journalist
