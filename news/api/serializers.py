@@ -52,6 +52,7 @@ class ArticleSerializer(serializers.ModelSerializer):
     # new method declaring at first
     # its works as new fields as like model fields but not effect on database table
     # its temporary work with function
+    # working as like javascript current data work
     time_since_publication = serializers.SerializerMethodField()
 
     class Meta:
@@ -67,3 +68,23 @@ class ArticleSerializer(serializers.ModelSerializer):
         now = datetime.now()
         time_delta = timesince(publication_date, now)
         return time_delta
+
+    # implement a functions that are verified field data
+    # its a bass class function that over lade forms this class
+    # functions parameter name is your won just its is class instance
+    def validate(self, data):
+        # model field name
+        if data["title"] == data["descriptions"]:
+            raise serializers.ValidationError("Can Not Same title and descriptions")
+        return data
+
+    # if return this functions than insert data into database fields
+
+    # set conditions on a Specific fields with functions
+    # has naming conventions validated + fields name as like validated + title
+    # thi paramitter are class properties of objects instance
+    def validated_title(self, value):
+        if len(value) < 45:
+            raise serializers.ValidationError(" Your Title are smaller then 45 Creator ")
+        return value
+    # if return this functions than insert data into database fields
