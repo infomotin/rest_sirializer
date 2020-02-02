@@ -4,7 +4,7 @@ from datetime import datetime
 from django.utils.timesince import timesince
 
 from rest_framework import serializers
-from news.models import Article
+from news.models import Article, Journalist
 
 
 # # Create a serializer that like a models as Django create a database table
@@ -45,6 +45,12 @@ from news.models import Article
 #         if data["title"] == data["descriptions"]:
 #             raise serializers.ValidationError(" Title and descriptions are not Same ")
 #         return data
+# now another serializer adding to our serializer file for Journalist
+
+# class JournalistSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Journalist
+#         fields = "__all__"
 
 
 # Create Model serializer class
@@ -54,8 +60,10 @@ class ArticleSerializer(serializers.ModelSerializer):
     # its temporary work with function
     # working as like javascript current data work
     time_since_publication = serializers.SerializerMethodField()
+
     # this variable are contain Foreignkey value with this value
-    author = serializers.StringRelatedField()
+    # author = serializers.StringRelatedField()
+    # author = JournalistSerializer()
 
     class Meta:
         model = Article
@@ -90,3 +98,11 @@ class ArticleSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(" Your Title are smaller then 45 Creator ")
         return value
     # if return this functions than insert data into database fields
+
+
+class JournalistSerializer(serializers.ModelSerializer):
+    articles = ArticleSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Journalist
+        fields = "__all__"
